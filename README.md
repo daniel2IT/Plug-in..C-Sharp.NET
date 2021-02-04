@@ -1,7 +1,7 @@
 # Plug-in..C-Sharp.NET
 
-a. Employee is created;
-b. Employee is deleted;
-c. Changes Employee priority;
-d. Employee is deactivated or activated;
-e. The Employee is transferred to another Account; 
+- Employee is created;
+- Employee is deleted;
+- Changes Employee priority;
+- Employee is deactivated or activated;
+- The Employee is transferred to another Account; 

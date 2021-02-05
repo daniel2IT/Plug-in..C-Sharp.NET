@@ -1,2 +1,7 @@
 # Plug-in..C-Sharp.NET
-Plug-in of Microsoft Dynamic CRM in C#.NET
+
+- Employee is created;
+- Employee is deleted;
+- Changes Employee priority;
+- Employee is deactivated or activated;
+- The Employee is transferred to another Account; 

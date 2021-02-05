@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 
@@ -6,8 +7,8 @@ namespace XRM_Plugin
 {
     public class HelperClass
     {
-        public static Tuple<IPluginExecutionContext, IOrganizationService> ObtainOrganization(IServiceProvider serviceProvider){
-
+        public static Tuple<IPluginExecutionContext, IOrganizationService> ObtainOrganization(IServiceProvider serviceProvider)
+        {
             IPluginExecutionContext context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
 
             IOrganizationServiceFactory serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
@@ -29,34 +30,31 @@ namespace XRM_Plugin
         }
 
         //Find Min Value
-        public static int? MinValue(EntityCollection employeeCollection)
+        public static int? GetMinPriority(EntityCollection employeeCollection)
         {
-            int? minValue = null;
+            int? minPriority = null;
 
             if (employeeCollection.Entities.Count != 0)
             {
-
-                minValue = (int)employeeCollection.Entities[0].GetAttributeValue<OptionSetValue>("cp_priority").Value;
+                minPriority = (int)employeeCollection.Entities[0].GetAttributeValue<OptionSetValue>("cp_priority").Value;
 
                 foreach (var contact in employeeCollection.Entities)
                 {
                     int optionsetvalue = (int)contact.GetAttributeValue<OptionSetValue>("cp_priority").Value;
 
-                    if (minValue > optionsetvalue)
+                    if (minPriority > optionsetvalue)
                     {
-                        minValue = optionsetvalue;
+                        minPriority = optionsetvalue;
                     }
                 }
             }
-
-            return minValue;
+            return minPriority;
         }
 
-        public static void UpdateAcc(Guid accountGuid, int? minValue, IOrganizationService service)
+        public static void UpdateAcc(Guid accountGuid, int? minPriority, IOrganizationService service)
         {
             Entity accountEntity = new Entity("cp_course_account", accountGuid);
-
-            accountEntity["cp_priority"] = minValue.HasValue ? new OptionSetValue(minValue.Value) : null;
+            accountEntity["cp_priority"] = minPriority.HasValue ? new OptionSetValue(minPriority.Value) : null;
 
             service.Update(accountEntity);
         }

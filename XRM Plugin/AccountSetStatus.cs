@@ -15,12 +15,9 @@ namespace XRM_Plugin
                 Entity accountPostEmployee = (Entity)service.Item1.PostEntityImages["PostSetStateImg"];
                 Guid accountGuid = ((EntityReference)accountPostEmployee.Attributes["cp_account"]).Id;
 
-                int? oldMin = null;
-
                 EntityCollection employeeCollection = service.Item2.RetrieveMultiple(HelperClass.Query(accountPostEmployee.LogicalName, accountGuid));
-                oldMin = HelperClass.MinValue(employeeCollection);
 
-                HelperClass.UpdateAcc(accountGuid, oldMin, service.Item2);
+                HelperClass.UpdateAcc(accountGuid, HelperClass.GetMinPriority(employeeCollection), service.Item2);
             }
             catch (InvalidPluginExecutionException)
             {

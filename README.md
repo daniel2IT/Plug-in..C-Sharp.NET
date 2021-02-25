@@ -1,4 +1,4 @@
-# Plug-in..C-Sharp.NET
+# Plug-in for CRM Using .NET Framework 
 
 - Employee is created;
 - Employee is deleted;
